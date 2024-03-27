@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package llamaapi;
+
+message FineTuneRequest {
+  bytes csv_data = 1;
+}
+
+message FineTuneResponse {
+  string status = 1;
+  repeated string logs = 2;
+}
+
+message PredictionRequest {
+  string prompt = 1;
+}
+
+message PredictionResponse {
+  string response = 1;
+}
+
+service LlamaService {
+  rpc FineTune(FineTuneRequest) returns (FineTuneResponse);
+  rpc Predict(PredictionRequest) returns (PredictionResponse);
+}
