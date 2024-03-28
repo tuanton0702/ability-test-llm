@@ -54,6 +54,17 @@ import logging
 #     result = pipe(f"<s>[INST] {prompt} [/INST]")
 #     return result[0]['generated_text']
 def PredictLLM(request, model, tokenizer):
+    """
+    Generates text based on the provided prompt using the specified model and tokenizer.
+
+    Args:
+        request: Request object containing the prompt.
+        model: Pretrained model for text generation.
+        tokenizer: Tokenizer for processing text inputs.
+
+    Returns:
+        str: Generated text based on the prompt.
+    """
     prompt = request.prompt
     # Run text generation pipeline with our next model
     pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=36)
