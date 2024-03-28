@@ -19,7 +19,22 @@ message PredictionResponse {
   string response = 1;
 }
 
+message JsonFile {
+  string filename = 1;
+  string content = 2;
+}
+
+message MultipleJsonFiles {
+  repeated bytes files = 1;
+}
+
+message UploadResponse {
+  bool success = 1;
+  string message = 2;
+}
+
 service LlamaService {
   rpc FineTune(FineTuneRequest) returns (FineTuneResponse);
   rpc Predict(PredictionRequest) returns (PredictionResponse);
+  rpc UploadMultipleJsonFiles(MultipleJsonFiles) returns (UploadResponse);
 }

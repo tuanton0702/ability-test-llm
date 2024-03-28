@@ -24,6 +24,11 @@ class LlamaServiceStub(object):
                 request_serializer=proto_dot_llama__pb2.PredictionRequest.SerializeToString,
                 response_deserializer=proto_dot_llama__pb2.PredictionResponse.FromString,
                 )
+        self.UploadMultipleJsonFiles = channel.unary_unary(
+                '/llamaapi.LlamaService/UploadMultipleJsonFiles',
+                request_serializer=proto_dot_llama__pb2.MultipleJsonFiles.SerializeToString,
+                response_deserializer=proto_dot_llama__pb2.UploadResponse.FromString,
+                )
 
 
 class LlamaServiceServicer(object):
@@ -41,6 +46,12 @@ class LlamaServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UploadMultipleJsonFiles(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_LlamaServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -53,6 +64,11 @@ def add_LlamaServiceServicer_to_server(servicer, server):
                     servicer.Predict,
                     request_deserializer=proto_dot_llama__pb2.PredictionRequest.FromString,
                     response_serializer=proto_dot_llama__pb2.PredictionResponse.SerializeToString,
+            ),
+            'UploadMultipleJsonFiles': grpc.unary_unary_rpc_method_handler(
+                    servicer.UploadMultipleJsonFiles,
+                    request_deserializer=proto_dot_llama__pb2.MultipleJsonFiles.FromString,
+                    response_serializer=proto_dot_llama__pb2.UploadResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -95,5 +111,22 @@ class LlamaService(object):
         return grpc.experimental.unary_unary(request, target, '/llamaapi.LlamaService/Predict',
             proto_dot_llama__pb2.PredictionRequest.SerializeToString,
             proto_dot_llama__pb2.PredictionResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UploadMultipleJsonFiles(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/llamaapi.LlamaService/UploadMultipleJsonFiles',
+            proto_dot_llama__pb2.MultipleJsonFiles.SerializeToString,
+            proto_dot_llama__pb2.UploadResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

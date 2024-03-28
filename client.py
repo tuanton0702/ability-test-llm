@@ -16,15 +16,22 @@ async def grpc_channel():
     client = proto.llama_pb2_grpc.LlamaServiceStub(channel)
     return client
 
+@app.post('/create-dataset')
+async def CreateDataset(files: t.List[UploadFile] = File(...),
+                        client: t.Any = Depends(grpc_channel)) -> JSONResponse:
+    lst_byte = []
+    for file in files:
+        content = await file.read()
+        lst_byte.append(content)
+    result = await client.UploadMultipleJsonFiles(proto.llama_pb2.MultipleJsonFiles(files = lst_byte))
+    return JSONResponse(MessageToDict(result))
 @app.post('/fine-tune')
 async def Finetune(file: UploadFile = File(...),
                   client: t.Any = Depends(grpc_channel)) -> JSONResponse:
     data = await file.read()
 
     result = await client.FineTune(proto.llama_pb2.FineTuneRequest(csv_data=data))
-    # print(result)
     return JSONResponse(MessageToDict(result))
-    # return '11111'
 
 @app.post('/predict')
 async def Predict(prompt: str,
@@ -33,4 +40,4 @@ async def Predict(prompt: str,
     return JSONResponse(MessageToDict(predict))
 
 if __name__ == "__main__":
-    uvicorn.run("__main__:app", host="0.0.0.0", port=8000)
+    uvicorn.run("__main__:app", host="0.0.0.0", port=8000, reload=True)

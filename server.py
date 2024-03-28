@@ -8,19 +8,41 @@ import finetune_llm
 import predict_llm
 import csv
 import pandas as pd
-
+import json
+from datetime import datetime
 
 def byte_reader(request):
-    # print(request.decode('utf-8'))
     lst_data = request.csv_data.decode('utf-8').split('<s>')[1:]
     train_df = pd.DataFrame(lst_data, columns =['text'])
     return train_df
+
+def make_datset(lst_data):
+    timestamp = datetime.now().timestamp()
+    dt_object = datetime.fromtimestamp(timestamp)
+    timestamp_string_representation = dt_object.strftime("%Y-%m-%d-%H-%M%S")
+    json_df = {
+        "text" : []
+    }
+    for data in lst_data:
+        data_str = f"<s>[INST] {data['instruction']} [/INST] {data['answer']} </s>"
+        json_df["text"].append(data_str)
+    data_df = pd.DataFrame(json_df)
+    data_df.to_csv(f"./CreatedDataset/output_{timestamp_string_representation}.csv")
+    return timestamp_string_representation
 
 class ModelInit:
     def __init__(self) -> None:
         pass
 
 class LlamaService(proto.llama_pb2_grpc.LlamaServiceServicer):
+
+    async def UploadMultipleJsonFiles(self, request, context):
+        lst_json_data = []
+        for byte in request.files:
+            json_data = json.loads(byte.decode('utf-8'))
+            lst_json_data.append(json_data)
+        timestamp_string_representation = make_datset(lst_json_data)
+        return proto.llama_pb2.UploadResponse(success=True, message=f"Files uploaded successfully and saved to ./CreatedDataset/output_{timestamp_string_representation}.csv")
     
     async def FineTune(self, request, context):
         train_df = byte_reader(request)

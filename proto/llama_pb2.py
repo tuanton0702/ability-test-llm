@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11proto/llama.proto\x12\x08llamaapi\"#\n\x0f\x46ineTuneRequest\x12\x10\n\x08\x63sv_data\x18\x01 \x01(\x0c\"0\n\x10\x46ineTuneResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0c\n\x04logs\x18\x02 \x03(\t\"#\n\x11PredictionRequest\x12\x0e\n\x06prompt\x18\x01 \x01(\t\"&\n\x12PredictionResponse\x12\x10\n\x08response\x18\x01 \x01(\t2\x97\x01\n\x0cLlamaService\x12\x41\n\x08\x46ineTune\x12\x19.llamaapi.FineTuneRequest\x1a\x1a.llamaapi.FineTuneResponse\x12\x44\n\x07Predict\x12\x1b.llamaapi.PredictionRequest\x1a\x1c.llamaapi.PredictionResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11proto/llama.proto\x12\x08llamaapi\"#\n\x0f\x46ineTuneRequest\x12\x10\n\x08\x63sv_data\x18\x01 \x01(\x0c\"0\n\x10\x46ineTuneResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0c\n\x04logs\x18\x02 \x03(\t\"#\n\x11PredictionRequest\x12\x0e\n\x06prompt\x18\x01 \x01(\t\"&\n\x12PredictionResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"-\n\x08JsonFile\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\"\"\n\x11MultipleJsonFiles\x12\r\n\x05\x66iles\x18\x01 \x03(\x0c\"2\n\x0eUploadResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t2\xe9\x01\n\x0cLlamaService\x12\x41\n\x08\x46ineTune\x12\x19.llamaapi.FineTuneRequest\x1a\x1a.llamaapi.FineTuneResponse\x12\x44\n\x07Predict\x12\x1b.llamaapi.PredictionRequest\x1a\x1c.llamaapi.PredictionResponse\x12P\n\x17UploadMultipleJsonFiles\x12\x1b.llamaapi.MultipleJsonFiles\x1a\x18.llamaapi.UploadResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -29,6 +29,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_PREDICTIONREQUEST']._serialized_end=153
   _globals['_PREDICTIONRESPONSE']._serialized_start=155
   _globals['_PREDICTIONRESPONSE']._serialized_end=193
-  _globals['_LLAMASERVICE']._serialized_start=196
-  _globals['_LLAMASERVICE']._serialized_end=347
+  _globals['_JSONFILE']._serialized_start=195
+  _globals['_JSONFILE']._serialized_end=240
+  _globals['_MULTIPLEJSONFILES']._serialized_start=242
+  _globals['_MULTIPLEJSONFILES']._serialized_end=276
+  _globals['_UPLOADRESPONSE']._serialized_start=278
+  _globals['_UPLOADRESPONSE']._serialized_end=328
+  _globals['_LLAMASERVICE']._serialized_start=331
+  _globals['_LLAMASERVICE']._serialized_end=564
 # @@protoc_insertion_point(module_scope)
