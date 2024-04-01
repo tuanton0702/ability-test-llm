@@ -3,6 +3,10 @@
 ## Introduction
 This guide provides instructions on how to use the Llama Service API for tasks such as creating datasets, fine-tuning models, and making predictions. The API allows interaction with Llama models via gRPC and FastAPI.
 
+## Infrastructure diagram
+<img src="./infrastructure/Untitled.png" alt="Infrastructure diagram">
+
+
 ## Prerequisites
 Before using the Llama Service API, ensure you have the following:
 
