@@ -11,6 +11,9 @@ services:
       - ./model_checkpoint:/app/model_checkpoint
     depends_on:
       - grpc_server
+    networks:
+      - servingllm
+
 
   grpc_server:
     build: .
@@ -21,3 +24,8 @@ services:
       - ./CreatedDataset:/app/CreatedDataset
       - ./dataset:/app/dataset
       - ./model_checkpoint:/app/model_checkpoint
+    networks:
+      - servingllm
+network:
+  servingllm:
+    driver: bridge
