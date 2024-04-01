@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./CreatedDataset:/app/CreatedDataset
+      - ./dataset:/app/dataset
+      - ./model_checkpoint:/app/model_checkpoint
+    depends_on:
+      - grpc_server
+
+  grpc_server:
+    build: .
+    command: python server.py
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./CreatedDataset:/app/CreatedDataset
+      - ./dataset:/app/dataset
+      - ./model_checkpoint:/app/model_checkpoint

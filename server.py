@@ -69,12 +69,14 @@ class ModelInit:
     def init_model(self):
         model_name = "NousResearch/Llama-2-7b-chat-hf"
         new_model = "./model-checkpoint/llama-2-7b-chat-guanaco"
-        
+        # Load the entire model on the GPU 0
+        device_map = {"": 0}
         base_model = AutoModelForCausalLM.from_pretrained(
             model_name,
             low_cpu_mem_usage=True,
             return_dict=True,
-            torch_dtype=torch.float16
+            torch_dtype=torch.float16,
+            device_map=device_map
         )
         print("done load based")
         model = PeftModel.from_pretrained(base_model, new_model)
@@ -115,7 +117,6 @@ class LlamaService(proto.llama_pb2_grpc.LlamaServiceServicer):
     async def Predict(self, request, context):
         # Implement prediction logic here
         result = predict_llm.PredictLLM(request, self.model_init.model, self.model_init.tokenizer)
-        # responses = "tesssssssssst"
         return proto.llama_pb2.PredictionResponse(response=result)
 
 async def serve():

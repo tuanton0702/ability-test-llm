@@ -10,3 +10,6 @@ uvicorn==0.14.0
 python-multipart==0.0.5
 protobuf3==0.2.1
 grpcio-tools==1.62.1
+torch 
+torchvision 
+torchaudio

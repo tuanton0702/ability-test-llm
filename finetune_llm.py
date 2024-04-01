@@ -62,7 +62,7 @@ def FineTuneLLm(train_df):
     bnb_4bit_compute_dtype = "float16"
 
     # Quantization type (fp4 or nf4)
-    bnb_4bit_quant_type = "nf4"
+    bnb_4bit_quant_type = "fp4"
 
     # Activate nested quantization for 4-bit base models (double quantization)
     use_nested_quant = False
@@ -79,7 +79,7 @@ def FineTuneLLm(train_df):
 
     # Enable fp16/bf16 training (set bf16 to True with an A100)
     fp16 = False
-    bf16 = False
+    bf16 = True
 
     # Batch size per GPU for training
     per_device_train_batch_size = 4
@@ -131,7 +131,12 @@ def FineTuneLLm(train_df):
     # Load the entire model on the GPU 0
     device_map = {"": 0}
 
-    dataset = load_dataset(train_df, split="train")
+        # Save DataFrame to CSV
+    train_df.to_csv("./dataset/dataframe_data.csv", index=False)
+
+    # Load CSV using load_dataset
+    dataset = load_dataset("csv", data_files="./dataset/dataframe_data.csv")
+
 
     # Load tokenizer and model with QLoRA configuration
     compute_dtype = getattr(torch, bnb_4bit_compute_dtype)
@@ -142,7 +147,7 @@ def FineTuneLLm(train_df):
         bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=use_nested_quant,
     )
-
+    print(bnb_config)
     # Check GPU compatibility with bfloat16
     if compute_dtype == torch.float16 and use_4bit:
         major, _ = torch.cuda.get_device_capability()
